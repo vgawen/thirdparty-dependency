@@ -1,0 +1,16 @@
+export MACOSX_DEPLOYMENT_TARGET=10.9
+
+./Configure darwin64-x86_64-cc shared --prefix="/tmp/openssl-x86"
+make
+make install
+
+./Configure darwin64-arm64-cc shared --prefix="/tmp/openssl-arm64"
+make
+make install
+
+lipo -create /private/tmp/openssl-arm64/lib/libcrypto.1.0.0.dylib /private/tmp/openssl-x86/lib/libcrypto.1.0.0.dylib -output /Users/d/Downloads/libcrypto.1.0.0.dylib
+
+
+
+https://gist.github.com/felixbuenemann/5f4dcb30ebb3b86e1302e2ec305bac89
+patch -p0 Configure /Users/d/Downloads/SourceCode/openssl-1.0.2u-darwin-arm64.patch
